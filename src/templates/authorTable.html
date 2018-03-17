@@ -1,0 +1,78 @@
+{%load crispy_forms_tags%}
+<div id="authorTbl">
+	{%if query%}
+	<div class="col-md-6 offset-md-2">
+		<table class="table table-bordered table-striped table-hover">
+			<head>
+				<th>
+					sn
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					Ratings
+				</th>
+				<th>
+					Start Year
+				</th>
+				<th>
+					End Year
+				</th>
+				<th>
+					Insertion Date
+				</th>
+				<th>
+					Updated Date
+				</th>
+				<th>
+					Edit
+				</th>
+
+				<th>
+					Delete
+				</th>
+			</head>
+			{% for instance in query%}
+			<tr>
+				<td scope="row">
+					{{instance.id}}
+				</td>
+				<td>
+					{{instance.Name}}
+				</td>
+				<td>
+					{{instance.Ratings}}
+				</td>
+				<td>
+					{{instance.StartYear}}
+				</td>
+				<td>
+					{{instance.EndYear}}
+				</td>
+				<td>
+					{{instance.Created_at|timesince}}
+				</td>
+				<td>
+					{{instance.Updated_at|timesince}}
+				</td>
+				<td>
+					<button class="btn btn-danger" onclick="Delete({{instance.id}})">Delete</button>
+				</td>
+				<td>
+					<a href="#login-box" class="btn btn-success login-window">Edit</a>
+					
+				</td>
+
+			</tr>
+
+			{%endfor%}
+		</table>
+	
+
+
+    
+
+	<!-- query -->
+	{%endif%}
+</div>

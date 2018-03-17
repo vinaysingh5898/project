@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+{%load crispy_forms_tags%}
+
+
+{% block content%}
+<div class="row">
+	<div class=" col-md-6 ">
+		<form action="" method="POST">{%csrf_token%}
+			{{form|crispy}}
+			<input class="btn btn-primary" type="submit" name="" value="submit">
+		</form>
+	</div>
+</div>
+
+
+
+
+{%include 'authorTable.html'%}
+<script type="text/javascript">
+	// $(document).ready(function(){
+		var Delete=function($id) {
+			if( confirm('Do you want Delete this Author')){
+				$.get("/delete-author/"+$id)
+				.done(
+					function(data) {
+						console.log(data);
+						$('#authorTbl').html(data);
+					}
+					);
+			}
+		};
+	// });	
+
+
+
+
+
+// });
+</script>
+{%endblock%}

@@ -1,0 +1,63 @@
+{%extends "base.html"%}
+{%load crispy_forms_tags%}
+
+
+{% block content%}
+
+
+<!-- <div class="container"> 
+<div class="row panel" >
+	<div class=" col-md-6  col-md-offset-3" style="padding-top: 150px;padding-bottom: 150px;">
+		<form action="" method="POST">{%csrf_token%}
+			{{form|crispy}}
+			<input class="btn btn-primary" type="submit" name="" value="submit">
+		</form>
+	</div>
+</div>
+</div>
+-->
+
+<div class="breadcrumbs">
+	<div class="container">
+		<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+			<li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+			<li class="active">Login Page</li>
+		</ol>
+	</div>
+</div>
+<!-- //breadcrumbs -->
+<!-- login -->
+<div class="login">
+	<div class="container">
+		
+		{%if error%}
+		<br>
+
+		<div class="col-md-4 col-md-offset-4 alert alert-danger">
+			<ul><li>{{error}}</li></ul>
+			
+		</div>
+		{%endif%}
+
+		{% if request.user.is_authenticated %}
+		<h1>You ara loged In!</h1>
+		{% else%}
+		<h2>Login Form</h2>
+		<div class="login-form-grids animated wow slideInUp" data-wow-delay=".5s">
+			<form action="" method="POST">{%csrf_token%}
+				{{form|crispy}}
+				<div class="forgot">
+					<a href="{% url 'auth_password_reset'%}">Forgot Password?</a>
+				</div>
+				<input type="submit" value="Login">
+			</form>
+		</div>
+		<h4>For New People</h4>
+		<p><a href="registered.html">Register Here</a> (Or) go back to <a href="{% url 'home' %}">Home<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></p>
+	</div>
+</div>
+{% endif%}
+
+
+
+{%endblock%}

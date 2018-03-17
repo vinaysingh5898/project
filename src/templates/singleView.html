@@ -1,0 +1,116 @@
+{%extends "base.html"%}
+{%load crispy_forms_tags%}
+{%load staticfiles%}
+
+{% block content%}
+
+<!-- breadcrumbs -->
+<div class="breadcrumbs">
+	<div class="container">
+		<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+			<li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+			<li class="active">Single View</li>
+		</ol>
+	</div>
+</div>
+<!-- //breadcrumbs -->
+<div class="products">
+	<div class="container">
+		<div class="agileinfo_single">
+
+			<div class="col-md-4 agileinfo_single_left">
+				<img id="example" src="../media/{{bookDetail.bookEdition.CoverImage}}" alt=" " class="img-responsive">
+			</div>
+			<div class="col-md-8 agileinfo_single_right">
+				<h2>{{bookDetail.book.Title}}</h2>
+				<label>Rating</label>
+				<div class="progress xs" style="max-width :  150px;height :  8px">
+					<div class="progress-bar progress-bar-aqua" style="width :  20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+					</div>
+				</div>
+				<lable  style="color :  black; font-size :  15px;" float-right>20/100 </lable>
+
+				<div class="w3agile_description">
+					<h4>Description  : </h4>
+					<p>Editions : {{bookDetail.bookEdition.Edition}}
+						<br/>Year of Publication : {{bookDetail.bookEdition.YearOfPublication}}
+						<br/>Number of pages : {{bookDetail.bookEdition.PageCount}}
+						<br/>Seller : {{bookDetail.bookEdition.Seller}}
+						<br/>Publisher : {{bookDetail.book.Publisher}}<br>
+						Categories:
+						{% for category in categories%}
+						{{category}},
+						{%endfor%}
+					</p><br>
+					<label style="font-size :  15px;">Available : {{bookDetail.bookEdition.AvailableNoOfCopies}}</label>
+				</div>
+				<div class="snipcart-item block">
+					<div class="snipcart-thumb agileinfo_single_right_snipcart">
+						<h4 class="m-sing">₹{{bookDetail.discountedPrice}}<span>₹{{bookDetail.bookEdition.Price}}</span></h4>
+					</div>
+					<div class="snipcart-details agileinfo_single_right_details">
+						<form action="#" method="post">
+							<fieldset>
+								<input type="hidden" name="cmd" value="_cart">
+								<input type="hidden" name="add" value="1">
+								<input type="hidden" name="business" value=" ">
+								<input type="hidden" name="item_name" value="pulao basmati rice">
+								<input type="hidden" name="amount" value="21.00">
+								<input type="hidden" name="discount_amount" value="1.00">
+								<input type="hidden" name="currency_code" value="USD">
+								<input type="hidden" name="return" value=" ">
+								<input type="hidden" name="cancel_return" value=" ">
+								{% if request.user.is_autherised%}
+								<input type="submit" name="submit" value="Add to cart" class="button">
+								{%else%}
+								<input type="submit" name="submit" value="Log in For cart" class="button">
+								{%endif%}
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<div id="reviewView">
+{% include 'commentView.html'%}
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".rating input:radio").attr("checked", false);
+
+		$('.rating input').click(function () {
+			$(".rating span").removeClass('checked');
+			$(this).parent().addClass('checked');
+		});
+
+		// $('input:radio').change(
+		// 	function(){
+		// 		var userRating = this.value;
+		// 		alert(userRating);
+		// 	}); 
+		$("#idForm").submit(function(e) {
+
+    	var url = "{%url 'post-review'%}"; // the script where you handle the form input.
+
+    	$.ajax({
+    		type: "POST",
+    		url: url,
+           data: $("#idForm").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+
+               // console.log(data);
+               $('#reviewView').html(data)
+                // show response from the php script.
+           }
+       });
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+	});
+</script>
+
+{%endblock%}

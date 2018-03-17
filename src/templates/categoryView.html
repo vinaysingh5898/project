@@ -1,0 +1,112 @@
+{%extends "base.html"%}
+{%load crispy_forms_tags%}
+{%load staticfiles%}
+
+{% block content%}
+<div id="View">
+	<div class="breadcrumbs">
+		<div class="container">
+			<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+				<li><a href="{% url 'home'%}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+				<li class="active">Books > {{CategoryName}}</li>
+			</ol>
+		</div>
+	</div>
+
+	<!-- {{bookDetailList}} -->
+	<div class="products">
+		<div class="container">
+			<div class="col-md-4 products-left">
+				<div class="categories">
+					<h2>Categories</h2>
+					<ul class="cate">
+						<li><a href="{%url 'get_books_by_category' id=0 %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>All</a></li>
+						{% for Category in categories %}
+						<li><a href="{%url 'get_books_by_category' id=Category.id %}"><i class="fa fa-arrow-right" aria-hidden="true"></i>{{Category.Name}}</a></li>
+						{%endfor%}
+
+					</ul>
+
+				</div>																			
+			</div>
+			<div class="col-md-8 products-right">
+				<div class="products-right-grid">
+					<div class="products-right-grids">
+						<div class="sorting">
+							<select id="country" onchange="change_country(this.value)" class="frm-field required sect">
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Default sorting</option>
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Sort by popularity</option> 
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Sort by average rating</option>					
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Sort by price</option>								
+							</select>
+						</div>
+						<div class="sorting-left">
+							<select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Item on page 9</option>
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Item on page 18</option> 
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>Item on page 32</option>					
+								<option value="null"><i class="fa fa-arrow-right" aria-hidden="true"></i>All</option>								
+							</select>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				{% for bookDetail in bookDetailList%}
+
+				{% if forloop.counter|divisibleby:4%}	
+				<div class="agile_top_brands_grids">
+					{%endif%}
+					<div class="col-md-4 top_brand_left">
+						<div class="hover14 column">
+							<div class="agile_top_brand_left_grid">
+								<div class="agile_top_brand_left_grid_pos">
+									<img src="../media/images/offer.png" alt=" " class="img-responsive">
+								</div>
+								<div class="agile_top_brand_left_grid1">
+									<figure>
+										<div class="snipcart-item block">
+											<div class="snipcart-thumb">
+											<a href="{% url 'get_single_book' id=bookDetail.bookEdition.id%}"><img title=" " alt=" " src="../media/{{bookDetail.bookEdition.CoverImage}}" style="max-height:100px "></a>		
+												<p>{{bookDetail.book.Title}}&nbsp;<span style="font-size: 10px; color: red">{{bookDetail.bookEdition.Edition}} Edition</span></p>
+
+												<h4> ₹{{bookDetail.discountedPrice}} <span> ₹{{bookDetail.bookEdition.Price}}</span></h4>
+											</div>
+											<div class="snipcart-details top_brand_home_details">
+												<form action="#" method="post">
+													<fieldset>
+														<input type="hidden" name="cmd" value="_cart">
+														<input type="hidden" name="add" value="1">
+														<input type="hidden" name="business" value=" ">
+														<input type="hidden" name="item_name" value="Fortune Sunflower Oil">
+														<input type="hidden" name="amount" value="35.99">
+														<input type="hidden" name="discount_amount" value="1.00">
+														<input type="hidden" name="currency_code" value="USD">
+														<input type="hidden" name="return" value=" ">
+														<input type="hidden" name="cancel_return" value=" ">
+														{% if request.user.is_autherised%}
+														<input type="submit" name="submit" value="Add to cart" class="button">
+														{%else%}
+														<input type="submit" name="submit" value="Log in For cart" class="button">
+														{%endif%}
+													</fieldset>
+												</form>
+											</div>
+										</div>
+									</figure>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{% if forloop.counter|divisibleby:4 %}	
+				</div>
+				{%endif%}
+				{%endfor%}
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{%endblock%}

@@ -1,0 +1,101 @@
+{%load crispy_forms_tags%}
+<style type="text/css">
+	.thumbnail {
+		padding:0px;
+	}
+	.panel {
+		position:relative;
+	}
+	.panel>.panel-heading:after,.panel>.panel-heading:before{
+		position:absolute;
+		top:11px;left:-16px;
+		right:100%;
+		width:0;
+		height:0;
+		display:block;
+		content:" ";
+		border-color:transparent;
+		border-style:solid solid outset;
+		pointer-events:none;
+	}
+	.panel>.panel-heading:after{
+		border-width:7px;
+		border-right-color:#f7f7f7;
+		margin-top:1px;
+		margin-left:2px;
+	}
+	.panel>.panel-heading:before{
+		border-right-color:#ddd;
+		border-width:8px;
+	}
+</style>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>User Reviews</h3>
+		</div><!-- /col-sm-12 -->
+	</div><!-- /row -->
+	<div class="row">
+		<div class="col-sm-1">
+			<div class="thumbnail">
+				<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+			</div><!-- /thumbnail -->
+		</div><!-- /col-sm-1 -->
+
+		<div class="col-sm-5">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>
+				</div>
+				<div class="panel-body">
+					Panel content
+				</div><!-- /panel-body -->
+			</div><!-- /panel panel-default -->
+		</div><!-- /col-sm-5 -->
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>Your Reviews</h3>
+		</div><!-- /col-sm-12 -->
+	</div><!-- /row -->
+	<div class="row">
+		<div class="col-sm-1">
+			<div class="thumbnail">
+				<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+			</div><!-- /thumbnail -->
+		</div><!-- /col-sm-1 -->
+
+		<div class="col-sm-5">
+
+			<div class="txt-center">
+				<form class="form" method="POST" action="" id="idForm">{% csrf_token%}
+					<!-- <label for="subject">Subject</label> -->
+					<div class="rating" required>
+						<input id="star5" name="star" type="radio" value="5" class="radio-btn hide" required/>
+						<label for="star5">☆</label>
+						<input id="star4" name="star" type="radio" value="4" class="radio-btn hide" required/>
+						<label for="star4">☆</label>
+						<input id="star3" name="star" type="radio" value="3" class="radio-btn hide" required/>
+						<label for="star3">☆</label>
+						<input id="star2" name="star" type="radio" value="2" class="radio-btn hide" required/>
+						<label for="star2">☆</label>
+						<input id="star1" name="star" type="radio" value="1" class="radio-btn hide" required/>
+						<label for="star1">☆</label>
+						<div class="clear"></div>
+					</div>
+					<div style="color: red; font-size: 10px;">ratings is required </div>
+						<input type="number" name="User" value="{{request.user.id}}" hidden="true">
+						<input type="number" name="bookEdition" value="{{bookDetail.bookEdition.id}}" hidden="true">
+						<textarea class="form-control" name="content" style="max-width: 300px;"></textarea>
+						<input type="submit" class="btn btn-primary" name="" value="Save" style="float: left;">
+
+				</form>
+			</div>
+
+			
+		</div><!-- /col-sm-5 -->
+	</div>
+</div>
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script> -->

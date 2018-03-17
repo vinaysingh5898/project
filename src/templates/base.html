@@ -1,0 +1,33 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  
+  <title>{%block title %}{%endblock%}sachin</title>
+  {%include "home_css.html"%} 
+</head>
+
+<body>
+  {%include "home_js.html"%} 
+  {% include 'navbar.html' %}
+  <!-- {%verbatim%} -->
+  <!-- {%endverbatim%} -->
+
+    {%block jumbotron%}
+
+
+    {%endblock%}
+  <main role="main" >
+    {% block content%}
+
+    {%endblock%}
+
+  </main>
+{% include "footer.html"%}
+
+</body>
+</html>
